@@ -13,7 +13,7 @@ float   compute_disorder(int *stack, int size)
         j = i + 1;
         while (j < size)
         {
-            if (stack_a[i] > stack_a[j])
+            if (stack[i] > stack[j])
                 mistakes++;
             j++;
         }
