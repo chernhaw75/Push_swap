@@ -13,28 +13,6 @@
 #include "push_swap.h"
 #include <stdlib.h>
 
-static int	count_smaller(int *a, int size, int val)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (i < size)
-	{
-		if (a[i] < val)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-/*
-** Replace every value by its rank (0 = smallest). Handles negatives, and
-** the ranks fit in ceil(log2(size)) bits. Duplicates are rejected earlier.
-*/
-
-
 static int	bits_needed(int size)
 {
 	int	bits;
