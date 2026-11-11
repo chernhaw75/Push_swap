@@ -4,7 +4,7 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 INCLUDES	= -I.
 
-SRCS		= main.c \
+SRCS		= push_swap.c \
 			  ft_push.c \
 			  ft_rotate.c \
 			  ft_swap.c \
