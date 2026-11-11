@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
+#include "push_swap.h"
 
 typedef enum e_strat { ADAPTIVE, SIMPLE, MEDIUM, COMPLEX } t_strat;
 
