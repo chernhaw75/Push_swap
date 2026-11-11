@@ -24,6 +24,9 @@ void	reverse_rotate_a(int stack_a[], int size_a);
 void	rotate_b(int stack_b[], int size_b);
 void	reverse_rotate_b(int stack_b[], int size_b);
 
+/* ft_rotate_both.c */
+void	rotate_both(int *a, int *b, int size_a, int size_b);
+
 /* ft_swap.c */
 void	sa(int *stack);
 void	sb(int *stack);
@@ -33,6 +36,7 @@ void	ss(int *stack_a, int *stack_b);
 void	ft_simple_sort(int *a, int *b, int size);
 void	ft_medium_sort(int *a, int *b, int size);
 void	ft_complex_sort(int *a, int *b, int size);
+void	ft_small_sort(int *a, int *b, int size);
 
 int		rank_values(int *a, int size);
 float	ft_compute_disorder(int *stack, int size);

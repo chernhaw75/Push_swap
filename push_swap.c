@@ -109,7 +109,7 @@ static t_strat	ft_pick(t_strat s, double d)
 		return (s);
 	if (d < 0.2)
 		return (SIMPLE);
-	if (d < 0.5)
+	if (d < 0.7)
 		return (MEDIUM);
 	return (COMPLEX);
 }
@@ -145,7 +145,9 @@ static void	ft_run(int *a, int *b, int n, t_cfg *cfg)
 	s = ft_pick(cfg->strat, d);
 	if (d > 0.0)
 	{
-		if (s == SIMPLE)
+		if (cfg->strat == ADAPTIVE && n <= 5)
+			ft_small_sort(a, b, n);
+		else if (s == SIMPLE)
 			ft_simple_sort(a, b, n);
 		else if (s == MEDIUM)
 			ft_medium_sort(a, b, n);
