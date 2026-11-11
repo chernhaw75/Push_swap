@@ -115,7 +115,6 @@ ARG=$(shuf -i 0-1000 -n 100 | tr '\n' ' ')
 ### References
 
 - Cormen, Leiserson, Rivest, Stein: *Introduction to Algorithms* (CLRS), chapters on sorting and linear-time sorting (radix sort).
-- Donald Knuth: *The Art of Computer Programming, Volume 3: Sorting and Searching*, including the treatment of inversions.
 - Wikipedia: [Radix sort](https://en.wikipedia.org/wiki/Radix_sort), [Selection sort](https://en.wikipedia.org/wiki/Selection_sort), [Inversion (discrete mathematics)](https://en.wikipedia.org/wiki/Inversion_(discrete_mathematics)).
 - The 42 push_swap subject (PDF) and the 42 Norm.
 - GNU Make manual: <https://www.gnu.org/software/make/manual/>
