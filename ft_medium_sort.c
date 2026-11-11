@@ -10,92 +10,130 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "push_swap.h"
 
-static int	ft_isqrt(int n)
+typedef struct s_st
 {
-	int	r;
+	int	*a;
+	int	*b;
+	int	sa;
+	int	sb;
+}	t_st;
 
-	r = 1;
-	while ((r + 1) * (r + 1) <= n)
-		r++;
-	return (r);
+static int	ft_chunk(int size)
+{
+	if (size > 100)
+		return (size / 14 + 1);
+	return (size / 7 + 1);
+}
+
+static void	push_one(t_st *s, int *pend, int pushed, int chunk)
+{
+	if (*pend)
+		rotate_b(s->b, s->sb);
+	*pend = 0;
+	pb(s->a, s->b, &s->sa, &s->sb);
+	if (s->b[0] < pushed + chunk / 8 && s->sb > 1)
+		*pend = 1;
 }
 
 /*
-** Phase 1: move everything from a to b, one rank-chunk at a time.
-** If a[0] is inside the current window [0, pushed + chunk), push it.
-** Values in the lower half of the window go to the bottom of b (rotate_b),
-** so the bigger ones stay near the top of b.
-** Otherwise rotate a to look at the next element.
+** Phase 1: push a to b chunk by chunk (by rank). The lowest values of the
+** chunk (below chunk / 8) are rotated to the bottom of b. A pending rb is
+** merged with the next ra into a single rr when possible.
 */
-static void	push_chunks(int *a, int *b, int size)
+static void	push_chunks(t_st *s, int chunk)
 {
-	int	size_a;
-	int	size_b;
-	int	chunk;
 	int	pushed;
+	int	pend;
 
-	size_a = size;
-	size_b = 0;
-	chunk = ft_isqrt(size);
 	pushed = 0;
-	while (size_a > 0)
+	pend = 0;
+	while (s->sa > 0)
 	{
-		if (a[0] < pushed + chunk)
+		if (s->a[0] < pushed + chunk)
+			push_one(s, &pend, pushed++, chunk);
+		else if (pend && s->sa > 1)
 		{
-			pb(a, b, &size_a, &size_b);
-			if (b[0] < pushed + chunk / 2 && size_b > 1)
-				rotate_b(b, size_b);
-			pushed++;
+			rotate_both(s->a, s->b, s->sa, s->sb);
+			pend = 0;
 		}
 		else
-			rotate_a(a, size_a);
+			rotate_a(s->a, s->sa);
 	}
+	if (pend)
+		rotate_b(s->b, s->sb);
 }
 
-static int	max_index(int *b, int size_b)
+static int	idx_of(int *b, int v)
 {
 	int	i;
 
 	i = 0;
-	while (b[i] != size_b - 1)
+	while (b[i] != v)
 		i++;
 	return (i);
 }
 
-static void	bring_max_to_top(int *b, int size_b, int idx)
+static int	dist(int idx, int size)
 {
-	if (idx <= size_b / 2)
+	if (idx <= size / 2)
+		return (idx);
+	return (size - idx);
+}
+
+static void	bring_to_top_b(t_st *s, int idx)
+{
+	if (idx <= s->sb / 2)
 		while (idx-- > 0)
-			rotate_b(b, size_b);
+			rotate_b(s->b, s->sb);
 	else
-		while (idx++ < size_b)
-			reverse_rotate_b(b, size_b);
+		while (idx++ < s->sb)
+			reverse_rotate_b(s->b, s->sb);
 }
 
 /*
-** Phase 2: b holds ranks 0..size-1, so the current maximum is always the
-** rank size_b - 1. Bring it to the top the short way and pa it.
+** Phase 2: b holds ranks 0..sb-1. Take the max (rank sb-1), or when the
+** second max is clearly closer take it first, then the max, then sa.
 */
-static void	pull_back(int *a, int *b, int size)
+static void	pull_back(t_st *s)
 {
-	int	size_a;
-	int	size_b;
+	int	i1;
+	int	i2;
 
-	size_a = 0;
-	size_b = size;
-	while (size_b > 0)
+	while (s->sb > 0)
 	{
-		bring_max_to_top(b, size_b, max_index(b, size_b));
-		pa(a, b, &size_a, &size_b);
+		i1 = idx_of(s->b, s->sb - 1);
+		i2 = -1;
+		if (s->sb > 1)
+			i2 = idx_of(s->b, s->sb - 2);
+		if (i2 >= 0 && dist(i2, s->sb) + 1 < dist(i1, s->sb))
+		{
+			bring_to_top_b(s, i2);
+			pa(s->a, s->b, &s->sa, &s->sb);
+			bring_to_top_b(s, idx_of(s->b, s->sb));
+			pa(s->a, s->b, &s->sa, &s->sb);
+			sa(s->a);
+		}
+		else
+		{
+			bring_to_top_b(s, i1);
+			pa(s->a, s->b, &s->sa, &s->sb);
+		}
 	}
 }
 
 void	ft_medium_sort(int *a, int *b, int size)
 {
+	t_st	s;
+
 	if (!rank_values(a, size))
 		return ;
-	push_chunks(a, b, size);
-	pull_back(a, b, size);
+	s.a = a;
+	s.b = b;
+	s.sa = size;
+	s.sb = 0;
+	push_chunks(&s, ft_chunk(size));
+	pull_back(&s);
 }
