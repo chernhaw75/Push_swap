@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-float	compute_disorder(int *stack, int size)
+float	ft_compute_disorder(int *stack, int size)
 {
 	int	mistakes;
 	int	total_pairs;

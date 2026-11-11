@@ -30,6 +30,25 @@ void	rotate_a(int stack_a[], int size_a)
 	write(1, "ra\n", 3);
 }
 
+void	rotate_b(int stack_b[], int size_b)
+{
+	int	first;
+	int	i;
+
+	if (!stack_b || size_b < 2)
+		return ;
+	first = stack_b[0];
+	i = 0;
+	while (i < size_b - 1)
+	{
+		stack_b[i] = stack_b[i + 1];
+		i++;
+	}
+	stack_b[size_b - 1] = first;
+	write(1, "rb\n", 3);
+}
+
+
 void	reverse_rotate_a(int stack_a[], int size_a)
 {
 	int	last;
@@ -46,4 +65,22 @@ void	reverse_rotate_a(int stack_a[], int size_a)
 	}
 	stack_a[0] = last;
 	write(1, "rra\n", 4);
+}
+
+void	reverse_rotate_b(int stack_b[], int size_b)
+{
+	int	last;
+	int	i;
+
+	if (!stack_b || size_b < 2)
+		return ;
+	last = stack_b[size_b - 1];
+	i = size_b - 1;
+	while (i > 0)
+	{
+		stack_b[i] = stack_b[i - 1];
+		i--;
+	}
+	stack_b[0] = last;
+	write(1, "rrb\n", 4);
 }

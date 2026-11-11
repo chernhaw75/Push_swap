@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	sa(int *stack)
+#include <unistd.h>
+#include "push_swap.h"
+
+static void	swap_top(int *stack)
 {
 	int	temp;
 
@@ -19,8 +22,21 @@ void	sa(int *stack)
 	stack[1] = temp;
 }
 
+void	sa(int *stack)
+{
+	swap_top(stack);
+	write(1, "sa\n", 3);
+}
+
+void	sb(int *stack)
+{
+	swap_top(stack);
+	write(1, "sb\n", 3);
+}
+
 void	ss(int *stack_a, int *stack_b)
 {
-	sa(stack_a);
-	sb(stack_b);
+	swap_top(stack_a);
+	swap_top(stack_b);
+	write(1, "ss\n", 3);
 }
