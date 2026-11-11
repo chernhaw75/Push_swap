@@ -30,5 +30,5 @@ float	ft_compute_disorder(int *stack, int size)
 		}
 		i++;
 	}
-	return ((float)mistakes / (float)(size - 1));
+	return ((float)mistakes / ((float)size * (size - 1) / 2));
 }
