@@ -25,12 +25,14 @@ static void	swap_top(int *stack)
 void	sa(int *stack)
 {
 	swap_top(stack);
+	g_ops[SA]++;
 	write(1, "sa\n", 3);
 }
 
 void	sb(int *stack)
 {
 	swap_top(stack);
+	g_ops[SB]++;
 	write(1, "sb\n", 3);
 }
 
@@ -38,5 +40,6 @@ void	ss(int *stack_a, int *stack_b)
 {
 	swap_top(stack_a);
 	swap_top(stack_b);
+	g_ops[SS]++;
 	write(1, "ss\n", 3);
 }

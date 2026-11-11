@@ -37,4 +37,12 @@ void	ft_complex_sort(int *a, int *b, int size);
 int		rank_values(int *a, int size);
 float	ft_compute_disorder(int *stack, int size);
 
+/* operation counters (defined in push_swap.c) */
+typedef enum e_op
+{
+	SA, SB, SS, PA, PB, RA, RB, RR, RRA, RRB, RRR, OP_COUNT
+}	t_op;
+
+extern int	g_ops[OP_COUNT];
+
 #endif

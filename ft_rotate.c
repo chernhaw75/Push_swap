@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "push_swap.h"
 
 void	rotate_a(int stack_a[], int size_a)
 {
@@ -27,6 +28,7 @@ void	rotate_a(int stack_a[], int size_a)
 		i++;
 	}
 	stack_a[size_a - 1] = first;
+	g_ops[RA]++;
 	write(1, "ra\n", 3);
 }
 
@@ -45,6 +47,7 @@ void	rotate_b(int stack_b[], int size_b)
 		i++;
 	}
 	stack_b[size_b - 1] = first;
+	g_ops[RB]++;
 	write(1, "rb\n", 3);
 }
 
@@ -64,6 +67,7 @@ void	reverse_rotate_a(int stack_a[], int size_a)
 		i--;
 	}
 	stack_a[0] = last;
+	g_ops[RRA]++;
 	write(1, "rra\n", 4);
 }
 
@@ -82,5 +86,6 @@ void	reverse_rotate_b(int stack_b[], int size_b)
 		i--;
 	}
 	stack_b[0] = last;
+	g_ops[RRB]++;
 	write(1, "rrb\n", 4);
 }

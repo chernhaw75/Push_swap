@@ -41,6 +41,7 @@ void	pa(int *a, int *b, int *size_a, int *size_b)
 	if (*size_b < 1)
 		return ;
 	push(b, a, size_b, size_a);
+	g_ops[PA]++;
 	write(1, "pa\n", 3);
 }
 
@@ -49,5 +50,6 @@ void	pb(int *a, int *b, int *size_a, int *size_b)
 	if (*size_a < 1)
 		return ;
 	push(a, b, size_a, size_b);
+	g_ops[PB]++;
 	write(1, "pb\n", 3);
 }

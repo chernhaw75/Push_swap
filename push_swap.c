@@ -25,23 +25,12 @@ typedef struct s_cfg
 	int		bench;
 }	t_cfg;
 
-/* ---- assumed to exist in your project ---- */
-double	ft_compute_disorder(int *a, int size);	/* 0.0 .. 1.0 */
-void	ft_simple_sort(int *a, int size);		/* O(n^2) */
-void	ft_medium_sort(int *a, int size);		/* O(n sqrt n) */
-void	ft_complex_sort(int *a, int size);		/* radix, O(n log n) */
-
-/* Each op function (ft_push, ft_rotate, ft_swap, ...) must do: g_ops[OP]++;
-** where OP is the enum below, and write the op name to stdout. */
-typedef enum e_op
-{
-	SA, SB, SS, PA, PB, RA, RB, RR, RRA, RRB, RRR, OP_COUNT
-}	t_op;
 int		g_ops[OP_COUNT];
 
-static int	ft_error(int *a)
+static int	ft_error(int *a, int *b)
 {
 	free(a);
+	free(b);
 	write(2, "Error\n", 6);
 	return (1);
 }
@@ -147,7 +136,7 @@ static void	ft_bench(t_strat used, t_cfg *cfg, double d)
 		g_ops[RA], g_ops[RB], g_ops[RR], g_ops[RRA], g_ops[RRB], g_ops[RRR]);
 }
 
-static void	ft_run(int *a, int n, t_cfg *cfg)
+static void	ft_run(int *a, int *b, int n, t_cfg *cfg)
 {
 	double	d;
 	t_strat	s;
@@ -157,11 +146,11 @@ static void	ft_run(int *a, int n, t_cfg *cfg)
 	if (d > 0.0)
 	{
 		if (s == SIMPLE)
-			ft_simple_sort(a, n);
+			ft_simple_sort(a, b, n);
 		else if (s == MEDIUM)
-			ft_medium_sort(a, n);
+			ft_medium_sort(a, b, n);
 		else
-			ft_complex_sort(a, n);
+			ft_complex_sort(a, b, n);
 	}
 	if (cfg->bench)
 		ft_bench(s, cfg, d);
@@ -171,6 +160,7 @@ int	main(int argc, char **argv)
 {
 	t_cfg	cfg;
 	int		*a;
+	int		*b;
 	int		i;
 	int		n;
 
@@ -183,15 +173,17 @@ int	main(int argc, char **argv)
 	if (n <= 0)
 		return (0);
 	a = malloc(sizeof(int) * n);
-	if (!a)
-		return (1);
+	b = malloc(sizeof(int) * n);
+	if (!a || !b)
+		return (ft_error(a, b));
 	n = 0;
 	while (i < argc)
 		if (!ft_parse_int(argv[i++], &a[n++]))
-			return (ft_error(a));
+			return (ft_error(a, b));
 	if (ft_has_dup(a, n))
-		return (ft_error(a));
-	ft_run(a, n, &cfg);
+		return (ft_error(a, b));
+	ft_run(a, b, n, &cfg);
 	free(a);
+	free(b);
 	return (0);
 }
