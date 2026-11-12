@@ -89,8 +89,12 @@ void	ft_bring_to_top_b(t_st *s, int idx);
 void	ft_pull_back(t_st *s);
 
 /* ft_parse.c */
-int		ft_parse_flag(const char *s, t_cfg *cfg);
+int		ft_is_sep(char c);
 int		ft_load(char **argv, int count, int *a);
+
+/* ft_args.c */
+int		ft_parse_flag(const char *s, t_cfg *cfg);
+int		ft_count(char **argv, int count);
 
 /* ft_put.c / ft_bench.c (bench output goes to stderr) */
 void	ft_putstr_err(const char *s);

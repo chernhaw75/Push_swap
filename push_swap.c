@@ -57,28 +57,41 @@ static void	ft_run(int *a, int *b, int n, t_cfg *cfg)
 		ft_bench(s, cfg, d);
 }
 
+static int	ft_start(char **argv, int count, t_cfg *cfg)
+{
+	int	*a;
+	int	*b;
+	int	n;
+
+	if (count <= 0)
+		return (0);
+	n = ft_count(argv, count);
+	if (n == 0)
+		return (0);
+	a = NULL;
+	b = NULL;
+	if (n > 0)
+	{
+		a = malloc(sizeof(int) * n);
+		b = malloc(sizeof(int) * n);
+	}
+	if (n < 0 || !a || !b || !ft_load(argv, count, a))
+		return (ft_error(a, b));
+	ft_run(a, b, n, cfg);
+	free(a);
+	free(b);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_cfg	cfg;
-	int		*a;
-	int		*b;
 	int		i;
-	int		n;
 
 	cfg.strat = ADAPTIVE;
 	cfg.bench = 0;
 	i = 1;
 	while (i < argc && ft_parse_flag(argv[i], &cfg))
 		i++;
-	n = argc - i;
-	if (n <= 0)
-		return (0);
-	a = malloc(sizeof(int) * n);
-	b = malloc(sizeof(int) * n);
-	if (!a || !b || !ft_load(argv + i, n, a))
-		return (ft_error(a, b));
-	ft_run(a, b, n, &cfg);
-	free(a);
-	free(b);
-	return (0);
+	return (ft_start(argv + i, argc - i, &cfg));
 }

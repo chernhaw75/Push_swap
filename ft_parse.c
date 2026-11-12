@@ -13,19 +13,26 @@
 #include <limits.h>
 #include "push_swap.h"
 
-static int	ft_parse_int(const char *s, int *out)
+int	ft_is_sep(char c)
 {
-	long	n;
-	int		sign;
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
 
+static int	ft_parse_tok(const char **p, int *out)
+{
+	const char	*s;
+	long		n;
+	int			sign;
+
+	s = *p;
 	sign = 1;
 	n = 0;
 	if (*s == '-' || *s == '+')
 		if (*s++ == '-')
 			sign = -1;
-	if (!*s)
+	if (!*s || ft_is_sep(*s))
 		return (0);
-	while (*s)
+	while (*s && !ft_is_sep(*s))
 	{
 		if (*s < '0' || *s > '9')
 			return (0);
@@ -33,34 +40,8 @@ static int	ft_parse_int(const char *s, int *out)
 		if (n * sign > INT_MAX || n * sign < INT_MIN)
 			return (0);
 	}
+	*p = s;
 	*out = (int)(n * sign);
-	return (1);
-}
-
-static int	ft_streq(const char *a, const char *b)
-{
-	while (*a && *a == *b)
-	{
-		a++;
-		b++;
-	}
-	return (*a == *b);
-}
-
-int	ft_parse_flag(const char *s, t_cfg *cfg)
-{
-	if (ft_streq(s, "--simple"))
-		cfg->strat = SIMPLE;
-	else if (ft_streq(s, "--medium"))
-		cfg->strat = MEDIUM;
-	else if (ft_streq(s, "--complex"))
-		cfg->strat = COMPLEX;
-	else if (ft_streq(s, "--adaptive"))
-		cfg->strat = ADAPTIVE;
-	else if (ft_streq(s, "--bench"))
-		cfg->bench = 1;
-	else
-		return (0);
 	return (1);
 }
 
@@ -83,14 +64,22 @@ static int	ft_has_dup(int *a, int n)
 
 int	ft_load(char **argv, int count, int *a)
 {
-	int	i;
+	int			i;
+	int			n;
+	const char	*s;
 
 	i = 0;
+	n = 0;
 	while (i < count)
 	{
-		if (!ft_parse_int(argv[i], &a[i]))
-			return (0);
-		i++;
+		s = argv[i++];
+		while (*s)
+		{
+			while (ft_is_sep(*s))
+				s++;
+			if (*s && !ft_parse_tok(&s, &a[n++]))
+				return (0);
+		}
 	}
-	return (!ft_has_dup(a, count));
+	return (!ft_has_dup(a, n));
 }

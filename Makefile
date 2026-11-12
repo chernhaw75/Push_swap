@@ -7,6 +7,7 @@ RM			= rm -f
 
 SRCS		= push_swap.c \
 			  ft_parse.c \
+			  ft_args.c \
 			  ft_bench.c \
 			  ft_put.c \
 			  ft_push.c \
@@ -40,5 +41,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
 .PHONY: all clean fclean re
