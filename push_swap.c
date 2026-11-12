@@ -109,7 +109,7 @@ static t_strat	ft_pick(t_strat s, double d)
 		return (s);
 	if (d < 0.2)
 		return (SIMPLE);
-	if (d < 0.7)
+	if (d < 0.5)
 		return (MEDIUM);
 	return (COMPLEX);
 }
@@ -126,7 +126,7 @@ static void	ft_bench(t_strat used, t_cfg *cfg, double d)
 	i = 0;
 	while (i < OP_COUNT)
 		total += g_ops[i++];
-	pct = (int)(d * 10000);
+	pct = (int)(d * 10000 + 0.5);
 	dprintf(2, "[bench] disorder: %d.%02d%%\n", pct / 100, pct % 100);
 	dprintf(2, "[bench] strategy: %s / %s\n", name[cfg->strat], cplx[used]);
 	dprintf(2, "[bench] total_ops: %d\n", total);
