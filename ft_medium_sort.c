@@ -10,16 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "push_swap.h"
-
-typedef struct s_st
-{
-	int	*a;
-	int	*b;
-	int	sa;
-	int	sb;
-}	t_st;
 
 static int	ft_chunk(int size)
 {
@@ -66,64 +57,6 @@ static void	push_chunks(t_st *s, int chunk)
 		rotate_b(s->b, s->sb);
 }
 
-static int	idx_of(int *b, int v)
-{
-	int	i;
-
-	i = 0;
-	while (b[i] != v)
-		i++;
-	return (i);
-}
-
-static int	dist(int idx, int size)
-{
-	if (idx <= size / 2)
-		return (idx);
-	return (size - idx);
-}
-
-static void	bring_to_top_b(t_st *s, int idx)
-{
-	if (idx <= s->sb / 2)
-		while (idx-- > 0)
-			rotate_b(s->b, s->sb);
-	else
-		while (idx++ < s->sb)
-			reverse_rotate_b(s->b, s->sb);
-}
-
-/*
-** Phase 2: b holds ranks 0..sb-1. Take the max (rank sb-1), or when the
-** second max is clearly closer take it first, then the max, then sa.
-*/
-static void	pull_back(t_st *s)
-{
-	int	i1;
-	int	i2;
-
-	while (s->sb > 0)
-	{
-		i1 = idx_of(s->b, s->sb - 1);
-		i2 = -1;
-		if (s->sb > 1)
-			i2 = idx_of(s->b, s->sb - 2);
-		if (i2 >= 0 && dist(i2, s->sb) + 1 < dist(i1, s->sb))
-		{
-			bring_to_top_b(s, i2);
-			pa(s->a, s->b, &s->sa, &s->sb);
-			bring_to_top_b(s, idx_of(s->b, s->sb));
-			pa(s->a, s->b, &s->sa, &s->sb);
-			sa(s->a);
-		}
-		else
-		{
-			bring_to_top_b(s, i1);
-			pa(s->a, s->b, &s->sa, &s->sb);
-		}
-	}
-}
-
 void	ft_medium_sort(int *a, int *b, int size)
 {
 	t_st	s;
@@ -135,5 +68,5 @@ void	ft_medium_sort(int *a, int *b, int size)
 	s.sa = size;
 	s.sb = 0;
 	push_chunks(&s, ft_chunk(size));
-	pull_back(&s);
+	ft_pull_back(&s);
 }

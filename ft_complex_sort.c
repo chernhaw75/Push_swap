@@ -18,7 +18,6 @@
 ** the ranks fit in ceil(log2(size)) bits. Duplicates are rejected earlier.
 */
 
-
 static int	bits_needed(int size)
 {
 	int	bits;

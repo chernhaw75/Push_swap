@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bubble_sort.c                                   :+:      :+:    :+:   */
+/*   ft_simple_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchern-h <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -49,7 +49,7 @@ static void	bring_to_top(int *a, int size_a, int idx)
 			rotate_a(a, size_a);
 	else
 		while (idx++ < size_a)
-			reverse_rotate_a(a, size_a);   /* your rra; name assumed */
+			reverse_rotate_a(a, size_a);
 }
 
 void	ft_simple_sort(int *a, int *b, int size)

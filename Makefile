@@ -14,7 +14,11 @@ SRCS		= push_swap.c \
 			  ft_simple_sort.c \
 			  ft_small_sort.c \
 			  ft_medium_sort.c \
-			  ft_complex_sort.c
+			  ft_complex_sort.c \
+			  ft_medium_pull.c \
+			  ft_parse.c \
+			  ft_put.c \
+			  ft_bench.c
 
 OBJS		= $(SRCS:.c=.o)
 HEADER		= push_swap.h

@@ -51,7 +51,6 @@ void	rotate_b(int stack_b[], int size_b)
 	write(1, "rb\n", 3);
 }
 
-
 void	reverse_rotate_a(int stack_a[], int size_a)
 {
 	int	last;
