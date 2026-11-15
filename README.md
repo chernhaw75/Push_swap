@@ -289,12 +289,9 @@ ARG=$(shuf -i 0-1000 -n 100 | tr '\n' ' ')
 
 AI (Claude, by Anthropic) was used as a learning and pair-programming aid. It was used for:
 
-- **Program structure:** drafting `main.c` (flag parsing, strict integer parsing and validation, duplicate check, strategy selection, benchmark output and stdout/stderr separation).
 - **Algorithms:** explaining and drafting the radix sort with value ranking, the chunk-based medium sort, and a selection-sort variant for the simple strategy; reviewing the existing simple sort for correctness.
 - **Concepts:** explaining the disorder metric and the reasoning behind choosing one strategy once rather than re-evaluating during the sort.
 - **Documentation:** generating the first draft of this README.
-
-All AI-generated code and explanations were read, tested and adapted by the authors to fit the project's own stack functions and the 42 Norm. The authors are responsible for the final code and understand how each part works.
 
 ## Authors
 
